@@ -29,7 +29,7 @@ const publicDir = path.join(__dirname, '../public');
 setInterval(emptyPublicDirectory, parseInt(process.env.DIR_EMPTY_INTERVAL_SECONDS!) * 1000);
 
 function emptyPublicDirectory(){
-    console.log(chalk.white.bgRed.bold("EMPTYING PUBLIC DIRECTORY"));
+    // console.log(chalk.white.bgRed.bold("EMPTYING PUBLIC DIRECTORY"));
     
     fs.readdir(publicDir, (err, files) => {
         if(err) throw err;

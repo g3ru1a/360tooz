@@ -20,13 +20,14 @@ function getURLStart(url: string): string {
 }
 
 export default async (html: string, offset: number = 1): Promise<undefined | Buffer[]> => {
-    process.stdout.write(chalk.bold.yellow("Fetching Images ..."));
+    // process.stdout.write(chalk.bold.yellow("Fetching Images ..."));
 
     let $: cheerio.Root = cheerio.load(html);
     let url: string | undefined = $('.ProductGallery_thumbs_item').first().children().first().attr('href');
 
     if(url === undefined){
-        console.log(chalk.black.bgRed.bold("Image URL Not found.")); return undefined;
+        // console.log(chalk.black.bgRed.bold("Image URL Not found."));
+        return undefined;
     }
 
     let startURL: string = getURLStart(url!);
@@ -40,14 +41,14 @@ export default async (html: string, offset: number = 1): Promise<undefined | Buf
         let wInd: string = ((index < 10) ? "0"+index : index).toString();
         buffer = await getBuffer(startURL.replace("01", wInd));
         if(buffer !== null) images.push(buffer);
-        readline.clearLine(process.stdout, -1);
-        readline.cursorTo(process.stdout, 0);
-        process.stdout.write(chalk.bold.yellow(`Fetching Image ${wInd} ...`));
+        // readline.clearLine(process.stdout, -1);
+        // readline.cursorTo(process.stdout, 0);
+        // process.stdout.write(chalk.bold.yellow(`Fetching Image ${wInd} ...`));
     }
 
-    readline.clearLine(process.stdout, -1);
-    readline.cursorTo(process.stdout, 0);
-    process.stdout.write(chalk.gray(`Fetched ${images.length} Images.`)+"\n");
+    // readline.clearLine(process.stdout, -1);
+    // readline.cursorTo(process.stdout, 0);
+    // process.stdout.write(chalk.gray(`Fetched ${images.length} Images.`)+"\n");
 
     return images;
 }
