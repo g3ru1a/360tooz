@@ -16,6 +16,8 @@ export interface GIFRequestData {
 }
 
 router.get('/', async (req: Request, res: Response) => {
+    console.clear();
+    
     let data: GIFRequestData = {
         url: req.body.url,
         offset: parseInt(req.body.offset),
@@ -40,12 +42,15 @@ router.get('/', async (req: Request, res: Response) => {
 
     let gifName = Date.now()+'.gif';
     let gifPath = path.join(__dirname, '../../public/'+gifName);
-    await GIFMerger(gifPath, images!, data.delay, data.quality);
+    GIFMerger(gifPath, images!, data.delay, data.quality)
+    .then(() => {
+        let gifLink = process.env.URL + '/public/' + gifName;
+        res.send({link: gifLink});
+    });
 
     // await FileUpload(gifPath, gifName);
 
-    let gifLink = process.env.URL + '/public/' + gifName;
-    res.send({link: gifLink});
+    
 });
 
 export default router;
