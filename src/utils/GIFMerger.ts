@@ -37,7 +37,7 @@ export default async (path: string, images: Buffer[], delay: number = 50, qualit
     let canvas = Canvas.createCanvas(size.width!, size.height!);
     let ctx = canvas.getContext('2d');
 
-    process.stdout.write(chalk.bold.yellow('Adding Images ...'));
+    // process.stdout.write(chalk.bold.yellow('Adding Images ...'));
 
     for(let i = 0; i < images.length; i++){
     //     readline.clearLine(process.stdout, -1);
