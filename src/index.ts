@@ -3,6 +3,7 @@ import {Request, Response} from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
+import routes from './routes/routes';
 
 //Load .env data
 dotenv.config();
@@ -16,10 +17,6 @@ app.use(express.json());
 app.use(cors());
 
 //Routes
-app.get('/', 
-    (req: Request, res: Response) => {
-        res.send('Hello World!');
-    }
-);
+app.use('/api',routes);
 
 app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
