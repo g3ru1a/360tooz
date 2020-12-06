@@ -8,6 +8,7 @@
         "watch": "tsc -w",
         "dev": "ts-node-dev ./src/index.ts",
         "serve": "node ./dist/index.js",
+        "start": "npm run build && npm run serve",
         "dock": "sudo docker run --name=360toozapi -d -p 3000:3000 -v /home/g3ru1a/Documents/Projects/360tooz/server/public:/usr/src/app/public g3ru1a/360tooz"
     },
     "keywords": [],
