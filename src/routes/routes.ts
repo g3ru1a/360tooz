@@ -25,6 +25,8 @@ router.get('/', async (req: Request, res: Response) => {
     let url = data.url;
 
     let html = await HTMLFetcher(url);
+    if(html == null) return res.status(500).send("Couldn't fetch URL.");
+
     let images: Buffer[] | undefined = await ImagesFetcher(html, data.offset);
 
     if(images?.length === 0 || images === undefined){
