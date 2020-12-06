@@ -17,16 +17,18 @@ function getURLStart(url: string): string {
     return url.replace(ind, '01');
 }
 
-export default async (html: string, offset: number = 1): Promise<void | Buffer[]> => {
+export default async (html: string, offset: number = 1): Promise<undefined | Buffer[]> => {
 
     let $: cheerio.Root = cheerio.load(html);
     let url: string | undefined = $('.ProductGallery_thumbs_item').first().children().first().attr('href');
 
-    if(url === undefined) return console.log("Image URL Not found.");
+    if(url === undefined){
+        console.log("Image URL Not found."); return undefined;
+    }
 
     let startURL: string = getURLStart(url!);
     let images: Buffer[] = [];
-    let index = 1;
+    let index: number = 1;
     let buffer: Buffer | null = await getBuffer(startURL);
 
     while(buffer != null){
@@ -34,7 +36,6 @@ export default async (html: string, offset: number = 1): Promise<void | Buffer[]
         let wInd: string = ((index < 10) ? "0"+index : index).toString();
         buffer = await getBuffer(startURL.replace("01", wInd));
         if(buffer !== null) images.push(buffer);
-        console.clear();
         console.log(`Fetching image ${wInd} ...`);
     }
 
