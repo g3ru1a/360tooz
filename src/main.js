@@ -7,9 +7,6 @@ import fs from 'fs';
 import path from 'path';
 
 export async function spintooz(options) {
-    console.log(options);
-
-    return;
     let data = options;
 
     let url = data.url;
