@@ -2,7 +2,7 @@ import axios from 'axios';
 import chalk from 'chalk';
 import readline from 'readline';
 
-export default async (url: string): Promise<any | null> => {
+export default async (url) => {
     process.stdout.write(chalk.bold.yellow('Fetching HTML ...'));
     try {
         const { data } = await axios.get(url);

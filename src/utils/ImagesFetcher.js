@@ -3,8 +3,8 @@ import axios from 'axios';
 import chalk from 'chalk';
 import readline from 'readline';
 
-async function getBuffer(url: string): Promise<Buffer | null>{
-    let buffer: Buffer | null = null;
+async function getBuffer(url){
+    let buffer = null;
 
     await axios.get(url, {responseType: 'arraybuffer'})
         .then(res => {
@@ -13,34 +13,35 @@ async function getBuffer(url: string): Promise<Buffer | null>{
     return buffer;
 }
 
-function getURLStart(url: string): string {
-    let args: string[] = url.split('/');
-    let ind: string = args[args.length - 1].split('.')[0];
+function getURLStart(url) {
+    let args = url.split('/');
+    let ind = args[args.length - 1].split('.')[0];
     return url.replace(ind, '01');
 }
 
-export default async (html: string, offset: number = 1): Promise<undefined | Buffer[]> => {
+export default async (html, offset = 1) => {
     process.stdout.write(chalk.bold.yellow("Fetching Images ..."));
 
-    let $: cheerio.Root = cheerio.load(html);
-    let url: string | undefined = $('.ProductGallery_thumbs_item').first().children().first().attr('href');
+    let $ = cheerio.load(html);
+    let url = $('.ProductGallery_thumbs_item').first().children().first().attr('href');
 
     if(url === undefined){
         console.log(chalk.black.bgRed.bold("Image URL Not found."));
         return undefined;
     }
 
-    let startURL: string = getURLStart(url!);
+    let startURL = getURLStart(url);
     
-    let images: Buffer[] = [];
-    let index: number = 1;
-    let buffer: Buffer | null = await getBuffer(startURL);
+    let images = [];
+    let index = 1;
+    let buffer = await getBuffer(startURL);
 
     while(buffer != null){
         index += offset;
-        let wInd: string = ((index < 10) ? "0"+index : index).toString();
+        let wInd = ((index < 10) ? "0"+index : index).toString();
         buffer = await getBuffer(startURL.replace("01", wInd));
         if(buffer !== null) images.push(buffer);
+
         readline.clearLine(process.stdout, -1);
         readline.cursorTo(process.stdout, 0);
         process.stdout.write(chalk.bold.yellow(`Fetching Image ${wInd} ...`));
