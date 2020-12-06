@@ -1,6 +1,7 @@
 import cheerio from 'cheerio';
 import axios from 'axios';
 import chalk from 'chalk';
+import readline from 'readline';
 
 async function getBuffer(url: string): Promise<Buffer | null>{
     let buffer: Buffer | null = null;
@@ -39,13 +40,13 @@ export default async (html: string, offset: number = 1): Promise<undefined | Buf
         let wInd: string = ((index < 10) ? "0"+index : index).toString();
         buffer = await getBuffer(startURL.replace("01", wInd));
         if(buffer !== null) images.push(buffer);
-        process.stdout.clearLine(-1);
-        process.stdout.cursorTo(0);
+        readline.clearLine(process.stdout, -1);
+        readline.cursorTo(process.stdout, 0);
         process.stdout.write(chalk.bold.yellow(`Fetching Image ${wInd} ...`));
     }
 
-    process.stdout.clearLine(-1);
-    process.stdout.cursorTo(0);
+    readline.clearLine(process.stdout, -1);
+    readline.cursorTo(process.stdout, 0);
     process.stdout.write(chalk.gray(`Fetched ${images.length} Images.`)+"\n");
 
     return images;
