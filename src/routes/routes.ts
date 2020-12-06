@@ -3,6 +3,7 @@ import HTMLFetcher from '../utils/HTMLFetcher';
 import ImagesFetcher from '../utils/ImagesFetcher';
 import GIFMerger from '../utils/GIFMerger';
 import path from 'path';
+import chalk from 'chalk';
 
 const router: Router = Router();
 
@@ -14,30 +15,32 @@ export interface GIFRequestData {
 }
 
 router.get('/', async (req: Request, res: Response) => {
-    console.clear();
     let data: GIFRequestData = {
         url: req.body.url,
         offset: parseInt(req.body.offset),
         delay: parseInt(req.body.delay),
         quality: parseInt(req.body.quality)
     }
-    console.log(data);
-    
 
     let url = data.url;
 
     let html = await HTMLFetcher(url);
     let images: Buffer[] | undefined = await ImagesFetcher(html, data.offset);
 
-    if(images === undefined) res.status(403).send("Couldn't fetch images.");
+    if(images?.length === 0 || images === undefined){
+        console.log(chalk.red("Couldn't fetch images."));
+        
+        res.status(500).send("Couldn't fetch images.");
+        return;
+    }
     images = images!;
 
-    let gifPath = path.join(__dirname, '../../public/'+Date.now()+'.gif');
+    let gifName = Date.now()+'.gif';
+    let gifPath = path.join(__dirname, '../../public/'+gifName);
     await GIFMerger(gifPath, images, data.delay, data.quality);
 
-    console.log('GIF Successfully generated!');
-    res.send(200);
-    
+    let gifLink = process.env.URL + '/public/' + gifName;
+    res.send({link: gifLink});
 });
 
 export default router;
