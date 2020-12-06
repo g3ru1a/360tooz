@@ -7,11 +7,8 @@
  - NPM 6+
 ### Installation
 
-After you cloned the repository run `npm install`
-After that finishes, run the web server with:
-
 ```
-npm install -g 360tooz
+npm install -g spintooz
 ```
 
 ### How to use

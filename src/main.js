@@ -6,6 +6,9 @@ import chalk from 'chalk';
 import path from 'path';
 
 export async function spintooz(options) {
+
+    console.log(chalk.gray('Ready.'));
+
     let data = options;
 
     let url = data.url;

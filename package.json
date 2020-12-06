@@ -1,6 +1,6 @@
 {
-    "name": "360tooz",
-    "version": "1.0.5",
+    "name": "spintooz",
+    "version": "1.0.0",
     "description": "Convert youtooz product page into 360 spin GIF",
     "main": "src/index.js",
     "bin": {
