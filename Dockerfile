@@ -11,8 +11,6 @@ RUN npm install
 # Boundle app source
 COPY . .
 
-ADD ./public /usr/src/app/public
-
 EXPOSE 3000
 
 CMD npm run build && npm run serve

@@ -2,6 +2,7 @@ import {Request, Response, Router} from 'express';
 import HTMLFetcher from '../utils/HTMLFetcher';
 import ImagesFetcher from '../utils/ImagesFetcher';
 import GIFMerger from '../utils/GIFMerger';
+// import FileUpload from '../utils/FileUpload';
 import path from 'path';
 import chalk from 'chalk';
 
@@ -39,7 +40,9 @@ router.get('/', async (req: Request, res: Response) => {
 
     let gifName = Date.now()+'.gif';
     let gifPath = path.join(__dirname, '../../public/'+gifName);
-    await GIFMerger(gifPath, images, data.delay, data.quality);
+    await GIFMerger(gifPath, images!, data.delay, data.quality);
+
+    // await FileUpload(gifPath, gifName);
 
     let gifLink = process.env.URL + '/public/' + gifName;
     res.send({link: gifLink});
