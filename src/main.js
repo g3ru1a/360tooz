@@ -3,7 +3,6 @@ import ImagesFetcher from './utils/ImagesFetcher.js';
 import GIFMerger from './utils/GIFMerger.js';
 
 import chalk from 'chalk';
-import fs from 'fs';
 import path from 'path';
 
 export async function spintooz(options) {
